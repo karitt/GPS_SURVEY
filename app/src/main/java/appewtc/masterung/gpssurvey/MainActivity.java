@@ -65,6 +65,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }   // Main Method
 
+    public void clickNonFix(View view) {
+
+        Intent objIntent = new Intent(this, MainActivity.class);
+        objIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(objIntent);
+        finish();
+
+    }   // clickNonFix
+
     public void clickFinish(View view) {
 
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
