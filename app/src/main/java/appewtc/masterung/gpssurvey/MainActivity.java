@@ -263,7 +263,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 deleteMarkerFromSQLite(strLatMarker);
 
 
-
                 return true;
             }   // event
         });
@@ -278,11 +277,22 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             int intID = Integer.parseInt(resultStrings[0]);
             Log.d("GPSsurvey", "ID = " + intID);
 
+            deleteRecordOnID(intID);
+
         } catch (Exception e) {
             Log.d("test", e.toString());
         }
 
     }   // deleteMarkerFromSQLite
+
+    private void deleteRecordOnID(int intID) {
+
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        objSqLiteDatabase.delete(ManageTABLE.TABLE_latlngTABLE,
+                ManageTABLE.COLUMN_ID + "=" + intID, null);
+
+    } // deleteRecordOnID
 
     private LatLng createLatLng(Double douLat, Double douLng) {
 
