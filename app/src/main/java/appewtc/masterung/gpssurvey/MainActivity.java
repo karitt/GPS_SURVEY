@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -69,11 +71,34 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 MODE_PRIVATE, null);
         Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_latlngTABLE, null);
 
+        objCursor.moveToFirst();
+
         int intPoint = objCursor.getCount();
 
         if (intPoint >= 3) {
 
             //Can Calculate Area
+            double[] latDoubles = new double[intPoint];
+            double[] lngDoubles = new double[intPoint];
+            LatLng[] pointLatLngs = new LatLng[intPoint];
+            PolygonOptions myPolygonOptions = new PolygonOptions();
+
+            //Get Value From SQLite
+            for (int i=0; i < intPoint; i++) {
+                latDoubles[i] = Double.parseDouble(objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_lat)));
+                lngDoubles[i] = Double.parseDouble(objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_lng)));
+                pointLatLngs[i] = new LatLng(latDoubles[i], lngDoubles[i]);
+                myPolygonOptions.add(pointLatLngs[i]);
+                objCursor.moveToNext();
+
+            } // for
+
+            myPolygonOptions.add(pointLatLngs[0]);
+            myPolygonOptions.strokeWidth(5)
+                    .strokeColor(Color.RED)
+                    .fillColor(Color.argb(50, 148, 194, 72));
+
+            mMap.addPolygon(myPolygonOptions);
 
         } else {
 
