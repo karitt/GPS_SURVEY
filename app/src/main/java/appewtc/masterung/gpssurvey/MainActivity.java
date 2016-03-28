@@ -126,13 +126,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(tag, "จำนวนเหลี่ยม = " + intPoint);
         Log.d(tag, "สามเหลี่ยมที่สร้างได้ = " + intTriangle);
 
-        double testDistance = distance(5, 5, 10, 10);
-        Log.d("28March", "distance = " + testDistance);
+
+
+        double distance1 = distance(latDoubles[0], lngDoubles[0], latDoubles[1], lngDoubles[1]);
+        double distance2 = distance(latDoubles[1], lngDoubles[1], latDoubles[2], lngDoubles[2]);
+        double distance3 = distance(latDoubles[0], lngDoubles[0], latDoubles[2], lngDoubles[2]);
 
         //Calculate Triangle
-        double area = triangleArea(3.0, 4.0, 5.0);
+        double area = triangleArea(distance1, distance2, distance3);
 
-
+        //Test Distance
+        Log.d("28March", "point 1-2 ==> " + distance1);
 
 
     } // clickFinish
@@ -149,12 +153,23 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     //นี่คือ เมทอด ที่หาระยะ ระหว่างจุด
-    private double distance(double douX1, double douY1, double douX2, double douY2) {
+    private static double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515* 1.609344;
 
-        Double douDistance = Math.sqrt( Math.pow((douX1-douX2),2) + Math.pow((douY1-douY2),2) );
 
+        return (dist);
+    }
 
-        return douDistance;
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
     }
 
 
