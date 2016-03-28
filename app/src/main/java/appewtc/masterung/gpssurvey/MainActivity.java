@@ -126,17 +126,30 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(tag, "จำนวนเหลี่ยม = " + intPoint);
         Log.d(tag, "สามเหลี่ยมที่สร้างได้ = " + intTriangle);
 
+        //Calculate Area สามเหลี่ยม ย่อย
+        double[] subTriangleDoubles = new double[intTriangle];
+        double distance1, distance2, distance3, Area=0;
+        int intIndex = 0;
+        for (int i = 0; i < intTriangle; i++) {
 
+            intIndex = intIndex + 1;
+            distance1 = distance(latDoubles[0], lngDoubles[0],
+                    latDoubles[intIndex], lngDoubles[intIndex]);
 
-        double distance1 = distance(latDoubles[0], lngDoubles[0], latDoubles[1], lngDoubles[1]);
-        double distance2 = distance(latDoubles[1], lngDoubles[1], latDoubles[2], lngDoubles[2]);
-        double distance3 = distance(latDoubles[0], lngDoubles[0], latDoubles[2], lngDoubles[2]);
+            distance2 = distance(latDoubles[intIndex], lngDoubles[intIndex],
+                    latDoubles[intIndex + 1], lngDoubles[intIndex + 1]);
 
-        //Calculate Triangle
-        double area = triangleArea(distance1, distance2, distance3);
+            distance3 = distance(latDoubles[intIndex + 1], lngDoubles[intIndex + 1],
+                    latDoubles[0], lngDoubles[0]);
 
-        //Test Distance
-        Log.d("28March", "point 1-2 ==> " + distance1);
+            Area = Area + triangleArea(distance1, distance2, distance3);
+
+            Log.d(tag, "distance1 ==>" + distance1);
+            Log.d(tag, "distance1 ==>" + distance2);
+            Log.d(tag, "distance1 ==>" + distance3);
+            Log.d(tag, "Area รอบที่ " + i + "==>" + Area);
+
+        }   //for
 
 
     } // clickFinish
