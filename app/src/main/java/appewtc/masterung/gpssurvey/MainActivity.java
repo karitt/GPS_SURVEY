@@ -127,14 +127,22 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(tag, "สามเหลี่ยมที่สร้างได้ = " + intTriangle);
 
         //Calculate Triangle
-        double area = triangleArea(10.0, 20.0, 30.0);
+        double area = triangleArea(3.0, 4.0, 5.0);
+        Log.d("20March", "area = " + area);
 
 
 
     } // clickFinish
 
     private double triangleArea(double douDis1, double douDis2, double douDis3) {
-        return 0;
+
+        double douArea = 0;
+
+        double S = (douDis1 + douDis2 + douDis3) / 2;
+
+        douArea = Math.sqrt(S*(S-douDis1)*(S-douDis2)*(S-douDis3));
+
+        return douArea;
     }
 
     //นี่คือ เมทอด ที่หาระยะ ระหว่างจุด
