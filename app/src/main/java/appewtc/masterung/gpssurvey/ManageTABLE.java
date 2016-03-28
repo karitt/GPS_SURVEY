@@ -20,12 +20,38 @@ public class ManageTABLE {
     public static final String COLUMN_lat = "lat";
     public static final String COLUMN_lng = "lng";
 
+    public static final String survey_table = "surveyTABLE";
+    public static final String column_Date = "Date";
+    public static final String column_Name = "Name";
+    public static final String column_Address = "Address";
+    public static final String column_Lat = "Lat";
+    public static final String column_Lng = "Lng";
+    public static final String column_Area = "Area";
+
 
     public ManageTABLE(Context context) {
         objMyOpenHelper = new MyOpenHelper(context);
         writeSqLiteDatabase = objMyOpenHelper.getWritableDatabase();
         readSqLiteDatabase = objMyOpenHelper.getReadableDatabase();
     }   // Constructor
+
+    public long addSurvey(String strDate,
+                          String strName,
+                          String strAddress,
+                          String strLat,
+                          String strLng,
+                          String strArea) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(column_Date, strDate);
+        contentValues.put(column_Name, strName);
+        contentValues.put(column_Address, strAddress);
+        contentValues.put(column_Lat, strLat);
+        contentValues.put(column_Lng, strLng);
+        contentValues.put(column_Area, strArea);
+
+        return writeSqLiteDatabase.insert(survey_table,null,contentValues);
+    }
 
     public String[] searchLat(String strLat) {
 
