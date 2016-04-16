@@ -411,6 +411,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             deleteRecordOnID(intID);
 
         } catch (Exception e) {
+
             Log.d("test", e.toString());
         }
 
