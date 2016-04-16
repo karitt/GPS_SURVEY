@@ -40,7 +40,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" />
-        <activity android:name=".FormActivity"></activity>
+        <activity android:name=".FormActivity" />
+        <activity android:name=".SaveData"></activity>
     </application>
 
 </manifest>
