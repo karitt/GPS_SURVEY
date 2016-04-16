@@ -41,7 +41,8 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main" />
         <activity android:name=".FormActivity" />
-        <activity android:name=".SaveData"></activity>
+        <activity android:name=".SaveData" />
+        <activity android:name=".ShowHistory"></activity>
     </application>
 
 </manifest>

@@ -27,6 +27,13 @@ public class MyOpenHelper extends SQLiteOpenHelper{
             "Lng text," +
             "Area text);";
 
+    private static final String create_plate_table = "create table plateTABLE(" +
+            "_id integer primary key," +
+            "Name text," +
+            "Date text," +
+            "Area text);";
+
+
     public MyOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }   // Constructor
@@ -35,6 +42,8 @@ public class MyOpenHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_latlngTABLE);
         db.execSQL(create_survey_table);
+        db.execSQL(create_plate_table);
+
     }
 
     @Override

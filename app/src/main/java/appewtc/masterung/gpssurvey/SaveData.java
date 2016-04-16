@@ -1,13 +1,16 @@
 package appewtc.masterung.gpssurvey;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,6 +40,44 @@ public class SaveData extends AppCompatActivity {
 
     }   // Main Method
 
+    public void clickSaveData(View view) {
+
+        nameString = nameEditText.getText().toString().trim();
+        addressString = addressEditText.getText().toString().trim();
+
+        //Check Space
+        if (nameString.equals("") || addressString.equals("")) {
+            Toast.makeText(this, "กรุณากรอกให้ครบทุกช่องครับ", Toast.LENGTH_SHORT).show();
+        } else {
+
+            AddValueToSQLite();
+
+        }
+
+
+    }   //clickSaveData
+
+    private void AddValueToSQLite() {
+
+        ManageTABLE manageTABLE = new ManageTABLE(this);
+        manageTABLE.addPlate(nameString, dateString, areaString);
+
+        for (int i = 0; i < latStrings.length; i++) {
+
+            manageTABLE.addSurvey(dateString, nameString,
+                    addressString, latStrings[i], lngStrings[i], areaString);
+
+        }   //for
+
+        Toast.makeText(this, "ขอบคุณครับ บันทึกข้อมูลเรียบร้อย", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(SaveData.this, ShowHistory.class);
+        startActivity(intent);
+        finish();
+
+
+    }   //AddValueToSQLite
+
     private void createListView() {
 
         SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
@@ -45,8 +86,8 @@ public class SaveData extends AppCompatActivity {
         cursor.moveToFirst();
         int intCount = cursor.getCount();
         String[] pointStrings = new String[intCount];
-        String[] latStrings = new String[intCount];
-        String[] lngStrings = new String[intCount];
+        latStrings = new String[intCount];
+        lngStrings = new String[intCount];
 
         for (int i = 0; i < intCount; i++) {
 

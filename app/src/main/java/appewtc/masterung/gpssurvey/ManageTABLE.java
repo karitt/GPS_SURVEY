@@ -28,12 +28,27 @@ public class ManageTABLE {
     public static final String column_Lng = "Lng";
     public static final String column_Area = "Area";
 
+    public static final String plate_table = "plateTABLE";
+
 
     public ManageTABLE(Context context) {
         objMyOpenHelper = new MyOpenHelper(context);
         writeSqLiteDatabase = objMyOpenHelper.getWritableDatabase();
         readSqLiteDatabase = objMyOpenHelper.getReadableDatabase();
     }   // Constructor
+
+
+    public long addPlate(String strName,
+                         String strDate,
+                         String strArea) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(column_Name, strName);
+        contentValues.put(column_Date, strDate);
+        contentValues.put(column_Area, strArea);
+
+        return writeSqLiteDatabase.insert(plate_table, null, contentValues);
+    }
 
     public long addSurvey(String strDate,
                           String strName,
